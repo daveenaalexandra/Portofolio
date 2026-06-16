@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daveena Alexandra Pentury – Portfolio</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap');
+
+  :root {
+    --purple: #7C3AED;
+    --purple-light: #A78BFA;
+    --purple-pale: #EDE9FE;
+    --pink: #EC4899;
+    --gradient: linear-gradient(135deg, #7C3AED 0%, #EC4899 100%);
+    --dark: #1A1035;
+    --mid: #2D1B69;
+    --text: #F3F0FF;
+    --muted: #A89EC9;
+    --white: #FFFFFF;
+    --card-bg: rgba(255,255,255,0.05);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--dark);
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.2rem 3rem;
+    background: rgba(26, 16, 53, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(124,58,237,0.2);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: var(--muted); text-decoration: none; font-size: 0.85rem;
+    letter-spacing: 0.05em; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--purple-light); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 7rem 3rem 4rem;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: -200px; right: -200px;
+    width: 700px; height: 700px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(124,58,237,0.3) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute; bottom: -150px; left: -100px;
+    width: 500px; height: 500px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(236,72,153,0.2) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-content { max-width: 1100px; margin: 0 auto; width: 100%; }
+  .hero-tag {
+    display: inline-block;
+    background: rgba(124,58,237,0.2);
+    border: 1px solid rgba(124,58,237,0.4);
+    color: var(--purple-light);
+    font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 0.4rem 1rem; border-radius: 100px;
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 {
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    line-height: 1.1; font-weight: 300; margin-bottom: 0.3rem;
+  }
+  .hero h1 em {
+    font-family: 'Playfair Display', serif;
+    font-style: italic; font-weight: 400;
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-sub {
+    color: var(--muted); font-size: 1.1rem; max-width: 520px;
+    margin: 1.5rem 0 2.5rem;
+  }
+  .hero-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: var(--gradient); color: white;
+    padding: 0.8rem 2rem; border-radius: 100px;
+    text-decoration: none; font-weight: 600; font-size: 0.9rem;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  .btn-primary:hover { opacity: 0.9; transform: translateY(-2px); }
+  .btn-ghost {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    border: 1px solid rgba(124,58,237,0.5);
+    color: var(--purple-light);
+    padding: 0.8rem 2rem; border-radius: 100px;
+    text-decoration: none; font-size: 0.9rem;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .btn-ghost:hover { background: rgba(124,58,237,0.15); transform: translateY(-2px); }
+
+  .hero-stats {
+    display: flex; gap: 3rem; margin-top: 4rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  .stat-num {
+    font-size: 2rem; font-weight: 700;
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .stat-label { color: var(--muted); font-size: 0.8rem; margin-top: 0.2rem; }
+
+  /* SECTIONS */
+  section { padding: 6rem 3rem; }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+  .section-label {
+    font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--purple-light); margin-bottom: 0.8rem;
+  }
+  .section-title {
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-weight: 700; margin-bottom: 3rem; line-height: 1.2;
+  }
+  .section-title span {
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* SKILLS */
+  #skills { background: rgba(124,58,237,0.04); }
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+  }
+  .skill-card {
+    background: var(--card-bg);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 16px;
+    padding: 1.8rem;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .skill-card:hover { border-color: rgba(124,58,237,0.4); transform: translateY(-4px); }
+  .skill-icon {
+    width: 44px; height: 44px; border-radius: 12px;
+    background: var(--gradient);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; margin-bottom: 1rem;
+  }
+  .skill-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.6rem; }
+  .skill-card p { color: var(--muted); font-size: 0.85rem; line-height: 1.5; }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1rem; }
+  .skill-tag {
+    background: rgba(124,58,237,0.15);
+    color: var(--purple-light);
+    font-size: 0.7rem; padding: 0.3rem 0.7rem; border-radius: 100px;
+  }
+
+  /* EXPERIENCE */
+  .exp-list { display: flex; flex-direction: column; gap: 1.2rem; }
+  .exp-card {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    gap: 2rem;
+    background: var(--card-bg);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 16px;
+    padding: 2rem;
+    transition: border-color 0.2s;
+  }
+  .exp-card:hover { border-color: rgba(124,58,237,0.3); }
+  .exp-meta { color: var(--muted); }
+  .exp-year {
+    font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--purple-light); margin-bottom: 0.4rem;
+  }
+  .exp-role {
+    font-size: 1rem; font-weight: 600; color: var(--text); margin-bottom: 0.3rem;
+  }
+  .exp-link { font-size: 0.8rem; color: var(--purple-light); text-decoration: none; }
+  .exp-link:hover { text-decoration: underline; }
+  .exp-title { font-size: 0.9rem; font-weight: 600; color: var(--text); margin-bottom: 0.5rem; }
+  .exp-desc { color: var(--muted); font-size: 0.875rem; line-height: 1.6; }
+  .exp-status {
+    display: inline-block;
+    background: rgba(124,58,237,0.2);
+    border: 1px solid rgba(124,58,237,0.3);
+    color: var(--purple-light);
+    font-size: 0.7rem; padding: 0.25rem 0.7rem; border-radius: 100px;
+    margin-bottom: 0.8rem;
+  }
+
+  /* ACHIEVEMENTS */
+  #achievements { background: rgba(124,58,237,0.04); }
+  .achieve-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.2rem;
+  }
+  .achieve-card {
+    background: var(--card-bg);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 16px;
+    padding: 1.6rem;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .achieve-card:hover { border-color: rgba(236,72,153,0.4); transform: translateY(-4px); }
+  .achieve-badge {
+    font-size: 1.8rem; margin-bottom: 0.8rem;
+  }
+  .achieve-year { color: var(--purple-light); font-size: 0.75rem; margin-bottom: 0.4rem; }
+  .achieve-card h3 { font-size: 0.95rem; font-weight: 600; line-height: 1.4; }
+  .achieve-card p { color: var(--muted); font-size: 0.8rem; margin-top: 0.4rem; }
+
+  /* CONTACT */
+  .contact-box {
+    background: var(--gradient);
+    border-radius: 24px;
+    padding: 4rem;
+    text-align: center;
+  }
+  .contact-box h2 {
+    font-size: 2.2rem; font-weight: 700; margin-bottom: 1rem;
+  }
+  .contact-box p { opacity: 0.85; margin-bottom: 2rem; }
+  .contact-links { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .contact-link {
+    background: rgba(255,255,255,0.2);
+    color: white; text-decoration: none;
+    padding: 0.7rem 1.5rem; border-radius: 100px;
+    font-size: 0.85rem; font-weight: 500;
+    transition: background 0.2s;
+  }
+  .contact-link:hover { background: rgba(255,255,255,0.35); }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 2rem;
+    color: var(--muted);
+    font-size: 0.8rem;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+
+  @media (max-width: 700px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { gap: 1rem; }
+    .hero, section { padding: 5rem 1.5rem 3rem; }
+    .hero-stats { gap: 1.5rem; }
+    .exp-card { grid-template-columns: 1fr; gap: 0.8rem; }
+    .contact-box { padding: 2.5rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">DAP</div>
+  <ul class="nav-links">
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#achievements">Awards</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-tag">Software Engineering Technology · UGM</div>
+    <h1>
+      Daveena<br>
+      <em>Alexandra</em> Pentury
+    </h1>
+    <p class="hero-sub">
+      I build things at the intersection of technology and creativity — from backend APIs and real-time dashboards to visual design and digital storytelling.
+    </p>
+    <div class="hero-links">
+      <a href="#experience" class="btn-primary">View My Work ↓</a>
+      <a href="mailto:daveenaalexandrapentury@mail.ugm.ac.id" class="btn-ghost">Get In Touch</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">3.69</div>
+        <div class="stat-label">GPA / 4.0</div>
+      </div>
+      <div>
+        <div class="stat-num">4+</div>
+        <div class="stat-label">Live Projects</div>
+      </div>
+      <div>
+        <div class="stat-num">2026</div>
+        <div class="stat-label">FSM 1st Place</div>
+      </div>
+      <div>
+        <div class="stat-num">10+</div>
+        <div class="stat-label">Org Roles</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-inner">
+    <div class="section-label">What I Do</div>
+    <h2 class="section-title">Skills & <span>Competencies</span></h2>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="skill-icon">⚙️</div>
+        <h3>Backend Development</h3>
+        <p>Building robust server-side logic, REST APIs, and managing databases with a focus on scalability and data integrity.</p>
+        <div class="skill-tags">
+          <span class="skill-tag">RESTful API</span>
+          <span class="skill-tag">SQL/NoSQL</span>
+          <span class="skill-tag">Git</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🌐</div>
+        <h3>Full-Stack Web</h3>
+        <p>End-to-end website development — from design through frontend implementation to backend integration.</p>
+        <div class="skill-tags">
+          <span class="skill-tag">Frontend</span>
+          <span class="skill-tag">Backend</span>
+          <span class="skill-tag">Full-Stack</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🖥️</div>
+        <h3>GUI / HMI Design</h3>
+        <p>Designing real-time monitoring dashboards and human-machine interfaces with data acquisition and UX optimization.</p>
+        <div class="skill-tags">
+          <span class="skill-tag">GUI</span>
+          <span class="skill-tag">HMI</span>
+          <span class="skill-tag">Data Viz</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🔌</div>
+        <h3>IoT Systems</h3>
+        <p>Hardware-software integration, embedded systems, and connected IoT solutions through hands-on project collaboration.</p>
+        <div class="skill-tags">
+          <span class="skill-tag">IoT</span>
+          <span class="skill-tag">Embedded</span>
+          <span class="skill-tag">Hardware</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🎨</div>
+        <h3>Creative Design</h3>
+        <p>UI design, graphic design (posters, logos), video editing, photography, and social media content strategy.</p>
+        <div class="skill-tags">
+          <span class="skill-tag">UI Design</span>
+          <span class="skill-tag">Graphic Design</span>
+          <span class="skill-tag">Video</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🤝</div>
+        <h3>Leadership</h3>
+        <p>Team leadership, event planning, stakeholder management, and organizational coordination at the executive level.</p>
+        <div class="skill-tags">
+          <span class="skill-tag">Team Lead</span>
+          <span class="skill-tag">Project Mgmt</span>
+          <span class="skill-tag">Coordination</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-inner">
+    <div class="section-label">My Journey</div>
+    <h2 class="section-title">Technical <span>Experience</span></h2>
+    <div class="exp-list">
+
+      <div class="exp-card">
+        <div class="exp-meta">
+          <div class="exp-year">2026 – Present</div>
+          <div class="exp-role">IoT Member</div>
+          <a href="#" class="exp-link">KOMATIK UGM</a>
+        </div>
+        <div>
+          <div class="exp-status">● In Progress</div>
+          <div class="exp-title">IoT & Embedded Systems Development</div>
+          <div class="exp-desc">Engaged in IoT-based projects involving hardware-software integration. Exploring embedded systems, connected devices, and smart technology solutions through collaborative knowledge sharing.</div>
+        </div>
+      </div>
+
+      <div class="exp-card">
+        <div class="exp-meta">
+          <div class="exp-year">2026</div>
+          <div class="exp-role">Backend Developer</div>
+          <a href="#" class="exp-link">Destinala & Muhe Journey</a>
+        </div>
+        <div>
+          <div class="exp-status">● Live</div>
+          <div class="exp-title">Dual Platform Web Backend</div>
+          <div class="exp-desc">Developed and maintained server-side logic and REST APIs for two live web platforms simultaneously. Managed database integration and ensured data consistency, delivering scalable backend systems in collaboration with a cross-functional team.</div>
+        </div>
+      </div>
+
+      <div class="exp-card">
+        <div class="exp-meta">
+          <div class="exp-year">2024 – Present</div>
+          <div class="exp-role">GUI/HMI Developer</div>
+          <a href="#" class="exp-link">Yacaranda Team UGM</a>
+        </div>
+        <div>
+          <div class="exp-status">● In Progress</div>
+          <div class="exp-title">Real-time Monitoring Dashboard</div>
+          <div class="exp-desc">Designed and built a GUI for real-time system monitoring and a Human-Machine Interface dashboard to improve interaction and system readability. Conducted data acquisition and analysis to drive UI optimization. Contributed to the team's 1st Place win at Formula Student Malaysia 2026.</div>
+        </div>
+      </div>
+
+      <div class="exp-card">
+        <div class="exp-meta">
+          <div class="exp-year">2025</div>
+          <div class="exp-role">Backend Developer</div>
+          <a href="#" class="exp-link">Basic Application Project</a>
+        </div>
+        <div>
+          <div class="exp-title">Application Backend Architecture</div>
+          <div class="exp-desc">Designed and implemented server-side logic and REST APIs to support full application functionality. Managed the database layer and ensured data integrity throughout the development lifecycle.</div>
+        </div>
+      </div>
+
+      <div class="exp-card">
+        <div class="exp-meta">
+          <div class="exp-year">2025</div>
+          <div class="exp-role">Full-Stack Developer</div>
+          <a href="#" class="exp-link">Web Programming Practicum</a>
+        </div>
+        <div>
+          <div class="exp-title">End-to-End Web Application</div>
+          <div class="exp-desc">Developed a complete website from the ground up — covering design, frontend implementation, and backend development — with seamless integration between server-side components and the user interface.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ACHIEVEMENTS -->
+<section id="achievements">
+  <div class="section-inner">
+    <div class="section-label">Recognition</div>
+    <h2 class="section-title">Achievements & <span>Awards</span></h2>
+    <div class="achieve-grid">
+      <div class="achieve-card">
+        <div class="achieve-badge">🏆</div>
+        <div class="achieve-year">2026</div>
+        <h3>1st Place, Static Event</h3>
+        <p>Formula Student Malaysia · Yacaranda Team UGM</p>
+      </div>
+      <div class="achieve-card">
+        <div class="achieve-badge">🎖️</div>
+        <div class="achieve-year">2026</div>
+        <h3>Best Staff</h3>
+        <p>Yacaranda Team UGM</p>
+      </div>
+      <div class="achieve-card">
+        <div class="achieve-badge">🎓</div>
+        <div class="achieve-year">2026</div>
+        <h3>University Delegation</h3>
+        <p>Satria Data National Competition · UGM</p>
+      </div>
+      <div class="achieve-card">
+        <div class="achieve-badge">⭐</div>
+        <div class="achieve-year">2023</div>
+        <h3>3rd Best Graduate</h3>
+        <p>Science Major · SMA Charitas</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" style="padding-top: 2rem;">
+  <div class="section-inner">
+    <div class="contact-box">
+      <h2>Let's Build Something Together</h2>
+      <p>Open to collaborations, internships, and interesting projects.<br>Feel free to reach out anytime.</p>
+      <div class="contact-links">
+        <a href="mailto:daveenaalexandrapentury@mail.ugm.ac.id" class="contact-link">✉ Email</a>
+        <a href="https://linkedin.com/in/daveenaalexandra" class="contact-link">in LinkedIn</a>
+        <a href="https://instagram.com/daveenaalexandra" class="contact-link">📸 Instagram</a>
+        <a href="tel:+6288210198861" class="contact-link">📞 +62 882 1019 8861</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Daveena Alexandra Pentury · Sleman, Yogyakarta</p>
+</footer>
+
+</body>
+</html>
