@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daveena Alexandra Pentury – Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+<style>
+/* ── RESET & ROOT ─────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --purple:     #7C3AED;
+  --purple-mid: #A78BFA;
+  --purple-pale:#EDE9FE;
+  --pink:       #EC4899;
+  --dark:       #1A1035;
+  --dark-card:  #221245;
+  --off-white:  #F5F3FF;
+  --text:       #F3F0FF;
+  --muted:      #A89EC9;
+  --muted2:     #6B5FA0;
+  --gray-text:  #888;
+  --green:      #10B981;
+}
+
+html, body {
+  width: 100%; height: 100%;
+  overflow: hidden;
+  font-family: 'Inter', sans-serif;
+  background: #000;
+  user-select: none;
+}
+
+/* ── STAGE ───────────────────────────────────────────── */
+#stage {
+  position: fixed; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* ── SLIDE CONTAINER ─────────────────────────────────── */
+.deck {
+  position: relative;
+  width: 100vw; height: 56.25vw; /* 16:9 */
+  max-height: 100vh;
+  max-width: 177.78vh;
+}
+
+/* ── INDIVIDUAL SLIDE ────────────────────────────────── */
+.slide {
+  position: absolute; inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .45s cubic-bezier(.4,0,.2,1),
+              transform .45s cubic-bezier(.4,0,.2,1);
+  transform: translateX(60px);
+  overflow: hidden;
+}
+.slide.active {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateX(0);
+}
+.slide.exit {
+  opacity: 0;
+  transform: translateX(-60px);
+  pointer-events: none;
+}
+
+/* ── CLICK ZONES ─────────────────────────────────────── */
+#zone-left, #zone-right {
+  position: fixed; top: 0; bottom: 0;
+  width: 48%;
+  z-index: 50;
+  cursor: pointer;
+}
+#zone-left  { left: 0; }
+#zone-right { right: 0; }
+
+/* ── NAV ARROWS ──────────────────────────────────────── */
+.arrow {
+  position: fixed; top: 50%; z-index: 60;
+  transform: translateY(-50%);
+  width: 44px; height: 44px; border-radius: 50%;
+  background: rgba(255,255,255,.1);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,.15);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: background .2s, opacity .2s;
+  opacity: 0;
+}
+#stage:hover .arrow { opacity: 1; }
+.arrow:hover { background: rgba(124,58,237,.4); }
+.arrow svg { width: 20px; height: 20px; stroke: #fff; fill: none; stroke-width: 2; }
+#arr-prev { left: 14px; }
+#arr-next { right: 14px; }
+.arrow.hidden { opacity: 0 !important; pointer-events: none; }
+
+/* ── PROGRESS BAR ────────────────────────────────────── */
+#progress-track {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  height: 3px; background: rgba(255,255,255,.08);
+  z-index: 60;
+}
+#progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--purple), var(--pink));
+  transition: width .4s ease;
+}
+
+/* ── SLIDE COUNTER ───────────────────────────────────── */
+#counter {
+  position: fixed; bottom: 10px; right: 18px;
+  font-size: 11px; color: rgba(255,255,255,.3);
+  z-index: 60; font-family: 'Inter', sans-serif;
+  letter-spacing: .05em;
+}
+
+/* ── DOT INDICATORS ──────────────────────────────────── */
+#dots {
+  position: fixed; bottom: 14px; left: 50%;
+  transform: translateX(-50%);
+  display: flex; gap: 6px; z-index: 60;
+}
+.dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: rgba(255,255,255,.2);
+  transition: background .3s, transform .3s;
+  cursor: pointer;
+}
+.dot.on {
+  background: var(--purple-mid);
+  transform: scale(1.4);
+}
+
+/* ════════════════════════════════════════════════════════
+   SLIDE STYLES
+   ════════════════════════════════════════════════════════ */
+
+/* Utility scale – everything in vw so it scales with the slide */
+.slide { font-size: 1.5vw; }
+
+/* ── SLIDE 1: COVER ─────────────────────────────────── */
+#s1 { background: var(--dark); }
+
+.blob {
+  position: absolute; border-radius: 50%;
+  pointer-events: none;
+}
+.blob-purple {
+  width: 55%; height: 55%;
+  top: -18%; right: -12%;
+  background: radial-gradient(circle, rgba(124,58,237,.35) 0%, transparent 70%);
+}
+.blob-pink {
+  width: 38%; height: 38%;
+  bottom: -12%; left: -6%;
+  background: radial-gradient(circle, rgba(236,72,153,.25) 0%, transparent 70%);
+}
+#s1 .tag {
+  position: absolute; top: 7%; left: 6%;
+  background: rgba(124,58,237,.2);
+  border: 1px solid rgba(124,58,237,.4);
+  color: var(--purple-mid);
+  font-size: .65em; letter-spacing: .12em; text-transform: uppercase;
+  padding: .3em .9em; border-radius: 100px;
+}
+#s1 h1 {
+  position: absolute; left: 6%; top: 18%;
+  font-family: 'Playfair Display', serif;
+  font-size: 4em; line-height: 1.05;
+  color: var(--text); font-weight: 700;
+}
+#s1 h1 em {
+  font-style: italic; font-weight: 400;
+  background: linear-gradient(135deg, var(--purple), var(--pink));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+#s1 .tagline {
+  position: absolute; left: 6%; top: 54%;
+  font-size: .75em; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--muted2);
+}
+#s1 .divider {
+  position: absolute; left: 6%; top: 60%;
+  width: 16%; height: 2px;
+  background: linear-gradient(90deg, var(--purple), var(--pink));
+  border-radius: 2px;
+}
+#s1 .subtitle {
+  position: absolute; left: 6%; top: 65%;
+  font-size: .65em; color: var(--muted2);
+}
+#s1 .stats {
+  position: absolute; right: 6%; top: 16%;
+  display: flex; flex-direction: column; gap: 1.2em;
+  text-align: center;
+}
+#s1 .stat-n {
+  font-size: 2.2em; font-weight: 700;
+  background: linear-gradient(135deg, var(--purple-mid), var(--pink));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-family: 'Playfair Display', serif;
+}
+#s1 .stat-l {
+  font-size: .55em; color: var(--muted2); margin-top: -.3em;
+}
+
+/* ── PROJECT SLIDES (2-6) ───────────────────────────── */
+.s-project { background: var(--off-white); }
+
+.s-project .top-bar {
+  position: absolute; top: 0; left: 0; right: 0; height: 7%;
+  background: var(--dark);
+  display: flex; align-items: center; justify-content: center;
+}
+.s-project .top-bar span {
+  font-size: .6em; letter-spacing: .1em; color: var(--purple-mid);
+}
+
+/* Left column */
+.s-project .col-left {
+  position: absolute; top: 10%; left: 5%; width: 24%;
+  bottom: 5%;
+}
+.s-project .meta-label {
+  font-size: .55em; color: var(--gray-text); margin-bottom: .2em;
+}
+.s-project .meta-value {
+  font-size: 1.1em; font-weight: 700;
+  color: var(--dark); font-family: 'Playfair Display', serif;
+  line-height: 1.2;
+}
+.s-project .meta-block { margin-bottom: 1.4em; }
+.s-project .meta-block.role-block {
+  display: flex; align-items: flex-start; gap: .4em;
+}
+.s-project .dot-acc {
+  width: .55em; height: .55em; border-radius: 50%;
+  background: var(--purple); flex-shrink: 0; margin-top: .35em;
+}
+.s-project .meta-link {
+  font-size: .85em; font-weight: 700; color: var(--purple);
+}
+
+/* Vertical divider */
+.s-project .v-div {
+  position: absolute; left: 31%; top: 9%; bottom: 4%;
+  width: 1px; background: #ccc;
+}
+
+/* Right column */
+.s-project .col-right {
+  position: absolute; top: 10%; left: 33%; right: 4%; bottom: 5%;
+}
+.s-project .proj-label {
+  font-size: .55em; color: var(--gray-text); margin-bottom: .2em;
+}
+.s-project .proj-title {
+  font-size: 1.15em; font-weight: 700;
+  color: var(--dark); font-family: 'Playfair Display', serif;
+  line-height: 1.3; margin-bottom: .6em;
+}
+.s-project .badge {
+  display: inline-flex; align-items: center; gap: .3em;
+  font-size: .55em; font-weight: 600;
+  padding: .25em .8em; border-radius: 100px;
+  margin-bottom: .8em;
+}
+.badge-progress { background: var(--purple-pale); color: var(--purple); border: 1px solid var(--purple); }
+.badge-live     { background: #D1FAE5;           color: var(--green);  border: 1px solid var(--green); }
+.badge-done     { background: #E0E7FF;            color: #4338CA;       border: 1px solid #818CF8; }
+
+.s-project .proj-desc {
+  font-size: .7em; color: #444; line-height: 1.65;
+  margin-bottom: .9em;
+  text-align: justify;
+}
+.s-project .bullets { list-style: none; margin-bottom: .9em; }
+.s-project .bullets li {
+  font-size: .68em; color: #333; line-height: 1.5;
+  padding-left: 1em; position: relative; margin-bottom: .3em;
+}
+.s-project .bullets li::before {
+  content: ''; position: absolute; left: 0; top: .55em;
+  width: .4em; height: .4em; border-radius: 50%;
+  background: var(--purple);
+}
+.s-project .tags { display: flex; flex-wrap: wrap; gap: .4em; }
+.s-project .tag-chip {
+  background: var(--purple-pale); color: var(--purple);
+  font-size: .55em; padding: .25em .7em; border-radius: 100px;
+  font-weight: 500;
+}
+
+/* ── SLIDE 7: ACHIEVEMENTS ──────────────────────────── */
+#s7 { background: var(--dark); }
+#s7 .heading {
+  position: absolute; top: 8%; left: 6%;
+  font-size: 2em; font-weight: 700;
+  font-family: 'Playfair Display', serif;
+  color: var(--text);
+}
+#s7 .h-line {
+  position: absolute; top: 25%; left: 6%;
+  width: 15%; height: 2px;
+  background: linear-gradient(90deg, var(--purple), var(--pink));
+}
+#s7 .award-grid {
+  position: absolute; top: 30%; left: 5%; right: 5%; bottom: 8%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 2.5%;
+}
+#s7 .award-card {
+  background: var(--dark-card);
+  border: 1px solid rgba(124,58,237,.35);
+  border-radius: 1em;
+  padding: 5% 6%;
+  display: flex; flex-direction: column;
+  transition: border-color .2s;
+}
+#s7 .award-card:hover { border-color: var(--purple-mid); }
+#s7 .award-year { font-size: .55em; color: var(--purple-mid); margin-bottom: .3em; }
+#s7 .award-title {
+  font-size: .85em; font-weight: 700;
+  color: var(--text); font-family: 'Playfair Display', serif;
+  line-height: 1.3; margin-bottom: .3em;
+}
+#s7 .award-org { font-size: .6em; color: var(--muted2); }
+#s7 .award-icon { font-size: 1.6em; margin-bottom: .4em; }
+
+/* ── SLIDE 8: CLOSING ───────────────────────────────── */
+#s8 { background: var(--off-white); }
+
+#s8 .top-bar {
+  position: absolute; top: 0; left: 0; right: 0; height: 7%;
+  background: var(--dark);
+  display: flex; align-items: center; justify-content: center;
+}
+#s8 .top-bar span { font-size: .6em; letter-spacing: .1em; color: var(--purple-mid); }
+
+/* left dark card */
+#s8 .card-left {
+  position: absolute; top: 10%; left: 4%; width: 36%; bottom: 6%;
+  background: var(--dark); border-radius: 1.2em;
+  padding: 8% 7%;
+  display: flex; flex-direction: column;
+}
+#s8 .just-be {
+  font-family: 'Playfair Display', serif;
+  font-size: 2em; font-weight: 700;
+  color: var(--text); line-height: 1.15;
+  margin-bottom: .6em;
+}
+#s8 .just-sub { font-size: .7em; color: var(--muted); margin-bottom: auto; }
+#s8 .c-line {
+  width: 40%; height: 2px; margin: 1.2em 0;
+  background: linear-gradient(90deg, var(--purple), var(--pink));
+}
+#s8 .c-name { font-size: .75em; font-weight: 700; color: var(--purple-mid); margin-bottom: .25em; }
+#s8 .c-info { font-size: .55em; color: var(--muted2); line-height: 1.7; }
+
+/* right section */
+#s8 .card-right-top {
+  position: absolute; top: 10%; left: 42%; right: 4%; height: 46%;
+  background: var(--dark); border-radius: 1em;
+  padding: 4% 5%;
+}
+#s8 .idea-label { font-size: .6em; font-weight: 700; color: var(--purple-mid); margin-bottom: 1em; }
+#s8 .idea-grid {
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: .6em 1em;
+}
+#s8 .idea-item { display: flex; align-items: center; gap: .5em; }
+#s8 .idea-dot {
+  width: .75em; height: .75em; border-radius: 50%; flex-shrink: 0;
+}
+#s8 .idea-text { font-size: .55em; color: var(--muted); line-height: 1.3; }
+
+#s8 .tips-row {
+  position: absolute; left: 42%; right: 4%; bottom: 6%;
+  height: 40%;
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: 2%;
+}
+#s8 .tip-card {
+  background: var(--purple-pale);
+  border-radius: .8em;
+  padding: 7% 8%;
+}
+#s8 .tip-title {
+  font-size: .6em; font-weight: 700; color: var(--purple);
+  font-family: 'Playfair Display', serif;
+  line-height: 1.3; margin-bottom: .5em;
+}
+#s8 .tip-body { font-size: .55em; color: #444; line-height: 1.5; }
+
+/* ── KEYBOARD HINT ───────────────────────────────────── */
+#hint {
+  position: fixed; bottom: 30px; left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,.5); backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,.1);
+  color: rgba(255,255,255,.5);
+  font-size: 11px; padding: 6px 14px; border-radius: 100px;
+  letter-spacing: .04em;
+  transition: opacity .5s;
+  pointer-events: none; z-index: 70;
+}
+
+/* ── BACK TO PORTFOLIO BUTTON ────────────────────────── */
+#back-btn {
+  position: fixed; top: 14px; left: 16px; z-index: 80;
+  display: flex; align-items: center; gap: 5px;
+  background: rgba(255,255,255,.08);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,.15);
+  color: rgba(255,255,255,.6);
+  font-size: 11px; font-family: 'Inter', sans-serif;
+  font-weight: 500; letter-spacing: .04em;
+  padding: 6px 12px 6px 8px; border-radius: 100px;
+  text-decoration: none;
+  transition: background .2s, color .2s, opacity .3s;
+  opacity: 0;
+}
+#stage:hover #back-btn { opacity: 1; }
+#back-btn:hover { background: rgba(124,58,237,.35); color: #fff; }
+#back-btn svg { width: 14px; height: 14px; stroke: currentColor; }
+</style>
+</head>
+<body>
+
+<div id="stage">
+  <div class="deck" id="deck">
+
+    <!-- ═══════════════════════════════════════════════
+         SLIDE 1 · COVER
+         ═══════════════════════════════════════════════ -->
+    <div class="slide active" id="s1">
+      <div class="blob blob-purple"></div>
+      <div class="blob blob-pink"></div>
+
+      <div class="tag">Apple Developer Academy Indonesia</div>
+
+      <h1>Daveena Alexandra<br><em>Pentury</em></h1>
+
+      <div class="tagline">Software Engineer · Designer · Builder</div>
+      <div class="divider"></div>
+      <div class="subtitle">UGM · Software Engineering Technology &nbsp;|&nbsp; GPA 3.6/4.0 &nbsp;|&nbsp; South Tangerang, Indonesia</div>
+
+      <div class="stats">
+        <div>
+          <div class="stat-n">3.6</div>
+          <div class="stat-l">GPA / 4.0</div>
+        </div>
+        <div>
+          <div class="stat-n">4+</div>
+          <div class="stat-l">Live Projects</div>
+        </div>
+        <div>
+          <div class="stat-n">1st</div>
+          <div class="stat-l">FSM 2026</div>
+        </div>
+        <div>
+          <div class="stat-n">10+</div>
+          <div class="stat-l">Org Roles</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════
+         SLIDE 2 · GUI/HMI – Yacaranda
+         ═══════════════════════════════════════════════ -->
+    <div class="slide s-project" id="s2">
+      <div class="top-bar"><span>Apple Developer Academy Indonesia</span></div>
+
+      <div class="col-left">
+        <div class="meta-block">
+          <div class="meta-label">Year</div>
+          <div class="meta-value">2024 – Now</div>
+        </div>
+        <div class="meta-block role-block">
+          <div class="dot-acc"></div>
+          <div>
+            <div class="meta-label">Role</div>
+            <div class="meta-value">GUI/HMI<br>Developer</div>
+          </div>
+        </div>
+        <div class="meta-block">
+          <div class="meta-label">Link</div>
+          <div class="meta-link">Yacaranda UGM</div>
+        </div>
+      </div>
+
+      <div class="v-div"></div>
+
+      <div class="col-right">
+        <div class="proj-label">Project Description</div>
+        <div class="proj-title">Real-time Monitoring Dashboard · Yacaranda Team UGM</div>
+        <span class="badge badge-progress">● In Progress</span>
+        <p class="proj-desc">Designed and built a Graphical User Interface for real-time system monitoring. Developed a Human-Machine Interface (HMI) dashboard to improve user interaction and system readability for the Formula Student race car.</p>
+        <ul class="bullets">
+          <li>Designed and built GUI for real-time system monitoring</li>
+          <li>Developed HMI dashboard to improve interaction & readability</li>
+          <li>Conducted data acquisition & analysis to inform UI optimization</li>
+          <li>Contributed to 1st Place win at Formula Student Malaysia 2026</li>
+        </ul>
+        <div class="tags">
+          <span class="tag-chip">GUI Design</span>
+          <span class="tag-chip">HMI</span>
+          <span class="tag-chip">Data Acquisition</span>
+          <span class="tag-chip">Real-time Systems</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════
+         SLIDE 3 · Backend – Destinala & Muhe
+         ═══════════════════════════════════════════════ -->
+    <div class="slide s-project" id="s3">
+      <div class="top-bar"><span>Apple Developer Academy Indonesia</span></div>
+
+      <div class="col-left">
+        <div class="meta-block">
+          <div class="meta-label">Year</div>
+          <div class="meta-value">2026</div>
+        </div>
+        <div class="meta-block role-block">
+          <div class="dot-acc"></div>
+          <div>
+            <div class="meta-label">Role</div>
+            <div class="meta-value">Backend<br>Developer</div>
+          </div>
+        </div>
+        <div class="meta-block">
+          <div class="meta-label">Link</div>
+          <div class="meta-link">destinala.com</div>
+        </div>
+      </div>
+
+      <div class="v-div"></div>
+
+      <div class="col-right">
+        <div class="proj-label">Project Description</div>
+        <div class="proj-title">Dual Platform Web Backend · Destinala & Muhe Journey</div>
+        <span class="badge badge-live">● Live</span>
+        <p class="proj-desc">Developed and maintained server-side logic and REST APIs for two live web platforms simultaneously. Managed database integration and ensured data consistency across both applications.</p>
+        <ul class="bullets">
+          <li>Built and maintained REST APIs for two live web platforms</li>
+          <li>Managed database integration and ensured data consistency</li>
+          <li>Collaborated with dev team to deliver scalable backend systems</li>
+        </ul>
+        <div class="tags">
+          <span class="tag-chip">REST API</span>
+          <span class="tag-chip">Backend</span>
+          <span class="tag-chip">Database</span>
+          <span class="tag-chip">Server-side Logic</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════
+         SLIDE 4 · Full-Stack – Web Programming
+         ═══════════════════════════════════════════════ -->
+    <div class="slide s-project" id="s4">
+      <div class="top-bar"><span>Apple Developer Academy Indonesia</span></div>
+
+      <div class="col-left">
+        <div class="meta-block">
+          <div class="meta-label">Year</div>
+          <div class="meta-value">2025</div>
+        </div>
+        <div class="meta-block role-block">
+          <div class="dot-acc"></div>
+          <div>
+            <div class="meta-label">Role</div>
+            <div class="meta-value">Full-Stack<br>Developer</div>
+          </div>
+        </div>
+        <div class="meta-block">
+          <div class="meta-label">Link</div>
+          <div class="meta-link">Practicum Project</div>
+        </div>
+      </div>
+
+      <div class="v-div"></div>
+
+      <div class="col-right">
+        <div class="proj-label">Project Description</div>
+        <div class="proj-title">End-to-End Web Application · Web Programming Practicum</div>
+        <span class="badge badge-done">● Completed</span>
+        <p class="proj-desc">Developed a complete website end-to-end, covering design, front-end implementation, and backend development. Built and integrated server-side components with the user interface for a cohesive user experience.</p>
+        <ul class="bullets">
+          <li>Developed complete website from design to deployment</li>
+          <li>Built and integrated server-side components with the UI</li>
+          <li>Handled both frontend and backend for a seamless experience</li>
+        </ul>
+        <div class="tags">
+          <span class="tag-chip">Full-Stack</span>
+          <span class="tag-chip">Frontend</span>
+          <span class="tag-chip">Backend</span>
+          <span class="tag-chip">Web Design</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════
+         SLIDE 5 · Backend – Basic Application
+         ═══════════════════════════════════════════════ -->
+    <div class="slide s-project" id="s5">
+      <div class="top-bar"><span>Apple Developer Academy Indonesia</span></div>
+
+      <div class="col-left">
+        <div class="meta-block">
+          <div class="meta-label">Year</div>
+          <div class="meta-value">2025</div>
+        </div>
+        <div class="meta-block role-block">
+          <div class="dot-acc"></div>
+          <div>
+            <div class="meta-label">Role</div>
+            <div class="meta-value">Backend<br>Developer</div>
+          </div>
+        </div>
+        <div class="meta-block">
+          <div class="meta-label">Link</div>
+          <div class="meta-link">Academic Project</div>
+        </div>
+      </div>
+
+      <div class="v-div"></div>
+
+      <div class="col-right">
+        <div class="proj-label">Project Description</div>
+        <div class="proj-title">Application Backend Architecture · Basic Application Project</div>
+        <span class="badge badge-done">● Completed</span>
+        <p class="proj-desc">Designed and implemented server-side logic and REST APIs to support application functionality. Managed the application's database and ensured data integrity throughout the development lifecycle.</p>
+        <ul class="bullets">
+          <li>Designed and implemented server-side logic and REST APIs</li>
+          <li>Managed database layer and ensured data integrity</li>
+          <li>Delivered robust backend architecture for the application</li>
+        </ul>
+        <div class="tags">
+          <span class="tag-chip">REST API</span>
+          <span class="tag-chip">Server-side Logic</span>
+          <span class="tag-chip">Database</span>
+          <span class="tag-chip">Backend Architecture</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════
+         SLIDE 6 · IoT – KOMATIK
+         ═══════════════════════════════════════════════ -->
+    <div class="slide s-project" id="s6">
+      <div class="top-bar"><span>Apple Developer Academy Indonesia</span></div>
+
+      <div class="col-left">
+        <div class="meta-block">
+          <div class="meta-label">Year</div>
+          <div class="meta-value">2026 – Now</div>
+        </div>
+        <div class="meta-block role-block">
+          <div class="dot-acc"></div>
+          <div>
+            <div class="meta-label">Role</div>
+            <div class="meta-value">IoT<br>Member</div>
+          </div>
+        </div>
+        <div class="meta-block">
+          <div class="meta-label">Link</div>
+          <div class="meta-link">KOMATIK UGM</div>
+        </div>
+      </div>
+
+      <div class="v-div"></div>
+
+      <div class="col-right">
+        <div class="proj-label">Project Description</div>
+        <div class="proj-title">IoT & Embedded Systems · KOMATIK UGM</div>
+        <span class="badge badge-progress">● In Progress</span>
+        <p class="proj-desc">Engaged in IoT-based projects involving hardware-software integration and connected systems. Collaborating with members to explore and develop Internet of Things solutions at Komunitas Mahasiswa TIK UGM.</p>
+        <ul class="bullets">
+          <li>Engaged in IoT projects involving hardware-software integration</li>
+          <li>Collaborated to develop connected systems and IoT solutions</li>
+          <li>Participated in knowledge-sharing on embedded systems & smart tech</li>
+        </ul>
+        <div class="tags">
+          <span class="tag-chip">IoT</span>
+          <span class="tag-chip">Embedded Systems</span>
+          <span class="tag-chip">Hardware Integration</span>
+          <span class="tag-chip">Smart Technology</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════
+         SLIDE 7 · ACHIEVEMENTS
+         ═══════════════════════════════════════════════ -->
+    <div class="slide" id="s7">
+      <div class="blob blob-purple"></div>
+      <div class="blob blob-pink" style="bottom:-20%;left:-8%;width:45%;height:45%;"></div>
+
+      <div class="heading">Achievements &amp; Awards</div>
+      <div class="h-line"></div>
+
+      <div class="award-grid">
+        <div class="award-card">
+          <div class="award-icon">🏆</div>
+          <div class="award-year">2026</div>
+          <div class="award-title">1st Place, Static Event</div>
+          <div class="award-org">Formula Student Malaysia · Yacaranda Team UGM</div>
+        </div>
+        <div class="award-card">
+          <div class="award-icon">⭐</div>
+          <div class="award-year">2026</div>
+          <div class="award-title">Best Staff Award</div>
+          <div class="award-org">Yacaranda Team UGM</div>
+        </div>
+        <div class="award-card">
+          <div class="award-icon">🎓</div>
+          <div class="award-year">2026</div>
+          <div class="award-title">University Delegation</div>
+          <div class="award-org">Satria Data National Competition · UGM</div>
+        </div>
+        <div class="award-card">
+          <div class="award-icon">🎖️</div>
+          <div class="award-year">2023</div>
+          <div class="award-title">3rd Best Graduate</div>
+          <div class="award-org">Science Major · SMA Charitas</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════
+         SLIDE 8 · CLOSING
+         ═══════════════════════════════════════════════ -->
+    <div class="slide" id="s8">
+      <div class="top-bar"><span>Apple Developer Academy Indonesia</span></div>
+
+      <div class="card-left">
+        <div class="just-be">Just Be<br>Yourself.</div>
+        <div class="just-sub">No single right way.<br>Just be authentic.</div>
+        <div class="c-line"></div>
+        <div class="c-name">Daveena Alexandra Pentury</div>
+        <div class="c-info">
+          daveenaalexandrapentury@mail.ugm.ac.id<br>
+          linkedin.com/in/daveenaalexandra<br>
+          instagram.com/daveenaalexandra<br>
+          +62 882 1019 8861 · South Tangerang, Banten
+        </div>
+      </div>
+
+      <div class="card-right-top">
+        <div class="idea-label">Portfolio content ideas</div>
+        <div class="idea-grid">
+          <div class="idea-item">
+            <div class="idea-dot" style="background:#7C3AED"></div>
+            <div class="idea-text">Portfolio<br>content ideas</div>
+          </div>
+          <div class="idea-item">
+            <div class="idea-dot" style="background:#EC4899"></div>
+            <div class="idea-text">Products<br>you've built</div>
+          </div>
+          <div class="idea-item">
+            <div class="idea-dot" style="background:#0EA5E9"></div>
+            <div class="idea-text">Work samples /<br>assignments</div>
+          </div>
+          <div class="idea-item">
+            <div class="idea-dot" style="background:#10B981"></div>
+            <div class="idea-text">Business<br>you've run</div>
+          </div>
+          <div class="idea-item">
+            <div class="idea-dot" style="background:#F59E0B"></div>
+            <div class="idea-text">Ideas or<br>solutions</div>
+          </div>
+          <div class="idea-item">
+            <div class="idea-dot" style="background:#8B5CF6"></div>
+            <div class="idea-text">Participations,<br>Achievements or awards</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tips-row">
+        <div class="tip-card">
+          <div class="tip-title">Highlight Your Role</div>
+          <div class="tip-body">Group work or individual, explain the contribution clearly.</div>
+        </div>
+        <div class="tip-card">
+          <div class="tip-title">Tell Your Story Clearly</div>
+          <div class="tip-body">Use this thinking process: <strong>Why – How – What.</strong> Your portfolio is your journey that reflect your expertise.</div>
+        </div>
+        <div class="tip-card">
+          <div class="tip-title">Work In-progress is Welcome</div>
+          <div class="tip-body">Show ideas, drafts, and experiments. It doesn't need to be perfect.</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /deck -->
+</div><!-- /stage -->
+
+<!-- Back to portfolio -->
+<a id="back-btn" href="index.html">
+  <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+  Portfolio
+</a>
+
+<!-- Navigation -->
+<div id="zone-left"  onclick="go(-1)"></div>
+<div id="zone-right" onclick="go(+1)"></div>
+
+<button class="arrow hidden" id="arr-prev" onclick="go(-1)" aria-label="Previous">
+  <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+</button>
+<button class="arrow" id="arr-next" onclick="go(+1)" aria-label="Next">
+  <svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg>
+</button>
+
+<div id="progress-track"><div id="progress-fill"></div></div>
+<div id="counter"></div>
+<div id="dots"></div>
+<div id="hint">← click / swipe / arrow keys →</div>
+
+<script>
+const slides = Array.from(document.querySelectorAll('.slide'));
+const TOTAL  = slides.length;
+let cur = 0;
+let transitioning = false;
+
+// Build dots
+const dotsEl = document.getElementById('dots');
+slides.forEach((_, i) => {
+  const d = document.createElement('div');
+  d.className = 'dot' + (i === 0 ? ' on' : '');
+  d.onclick = () => goTo(i);
+  dotsEl.appendChild(d);
+});
+
+function update() {
+  document.getElementById('counter').textContent = `${cur+1} / ${TOTAL}`;
+  document.getElementById('progress-fill').style.width = `${((cur+1)/TOTAL)*100}%`;
+  document.querySelectorAll('.dot').forEach((d,i) => d.classList.toggle('on', i===cur));
+  document.getElementById('arr-prev').classList.toggle('hidden', cur===0);
+  document.getElementById('arr-next').classList.toggle('hidden', cur===TOTAL-1);
+}
+
+function goTo(next) {
+  if (transitioning || next === cur || next < 0 || next >= TOTAL) return;
+  transitioning = true;
+
+  const from = slides[cur];
+  const to   = slides[next];
+
+  from.classList.add('exit');
+  from.classList.remove('active');
+
+  // Set enter direction
+  to.style.transform = next > cur ? 'translateX(60px)' : 'translateX(-60px)';
+  to.style.opacity   = '0';
+  to.style.pointerEvents = 'none';
+  to.classList.remove('exit');
+
+  // Force reflow
+  to.offsetHeight;
+
+  to.style.transition = 'opacity .45s cubic-bezier(.4,0,.2,1), transform .45s cubic-bezier(.4,0,.2,1)';
+  to.style.transform  = 'translateX(0)';
+  to.style.opacity    = '1';
+  to.style.pointerEvents = 'all';
+  to.classList.add('active');
+
+  cur = next;
+  update();
+
+  setTimeout(() => {
+    from.classList.remove('exit');
+    from.style.cssText = '';
+    transitioning = false;
+  }, 480);
+}
+
+function go(dir) { goTo(cur + dir); }
+
+// Keyboard
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); go(+1); }
+  if (e.key === 'ArrowLeft')  { e.preventDefault(); go(-1); }
+});
+
+// Touch / swipe
+let tx0 = null;
+document.addEventListener('touchstart', e => { tx0 = e.touches[0].clientX; }, {passive:true});
+document.addEventListener('touchend',   e => {
+  if (tx0 === null) return;
+  const dx = e.changedTouches[0].clientX - tx0;
+  if (Math.abs(dx) > 40) go(dx < 0 ? +1 : -1);
+  tx0 = null;
+}, {passive:true});
+
+// Fade out hint after 4 s
+setTimeout(() => {
+  const h = document.getElementById('hint');
+  h.style.opacity = '0';
+  setTimeout(() => h.remove(), 600);
+}, 4000);
+
+update();
+</script>
+</body>
+</html>
