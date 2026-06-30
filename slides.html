@@ -74,6 +74,7 @@ html, body {
   width: 48%;
   z-index: 50;
   cursor: pointer;
+  pointer-events: none; /* CHANGED: no longer intercepts clicks; navigation handled by global click listener below */
 }
 #zone-left  { left: 0; }
 #zone-right { right: 0; }
@@ -138,12 +139,7 @@ html, body {
 /* ════════════════════════════════════════════════════════
    SLIDE STYLES
    ════════════════════════════════════════════════════════ */
-/* Tambahkan kode ini di bagian CSS Anda */
-.slide a {
-    position: relative !important;
-    z-index: 100 !important;
-    pointer-events: auto !important;
-}
+
 /* Utility scale – everything in vw so it scales with the slide */
 .slide { font-size: min(2.05vw, 3.6445vh); }
 
@@ -458,6 +454,12 @@ html, body {
 .s-project .proj-desc { margin-bottom: .35em; }
 .s-project .bullets   { margin-bottom: .25em; }
 .s-project .bullets li { margin-bottom: .2em; }
+
+/* ── LINK HOVER AFFORDANCE (NEW) ─────────────────────── */
+.s-project .meta-link a:hover,
+#s8 .c-info a:hover {
+  text-decoration: underline;
+}
 </style>
 </head>
 <body>
@@ -528,7 +530,7 @@ html, body {
         <div class="meta-block">
           <div class="meta-label">Link</div>
           <div class="meta-link">
-    <a href="instagram.com/yacarandaugm" target="_blank">Yacaranda UGM</a>
+    <a href="https://instagram.com/yacarandaugm" target="_blank" rel="noopener">Yacaranda UGM</a>
 </div>
         </div>
       </div>
@@ -577,7 +579,7 @@ html, body {
         <div class="meta-block">
           <div class="meta-label">Link</div>
           <div class="meta-link">
-    <a href="https://github.com/mat-te123/destinalaRepo" target="_blank">Github Repo Destinala</a>
+    <a href="https://github.com/mat-te123/destinalaRepo" target="_blank" rel="noopener">Github Repo Destinala</a>
 </div>
         </div>
       </div>
@@ -671,7 +673,7 @@ html, body {
         <div class="meta-block">
           <div class="meta-label">Link</div>
           <div class="meta-link">
-            <a href="instagram.com/yacarandaugm" target="_blank">Yacaranda UGM</a>
+            <a href="https://instagram.com/yacarandaugm" target="_blank" rel="noopener">Yacaranda UGM</a>
             </div>
         </div>
       </div>
@@ -723,7 +725,7 @@ html, body {
         <div class="meta-block">
           <div class="meta-label">Link</div>
           <div class="meta-link">
-            <a href="instagram.com/ukk.ugm" target="_blank">UKK UGM</a>
+            <a href="https://instagram.com/ukk.ugm" target="_blank" rel="noopener">UKK UGM</a>
           </div>
         </div>
       </div>
@@ -771,7 +773,7 @@ html, body {
         <div class="meta-block">
           <div class="meta-label">Link</div>
           <div class="meta-link">
-    <a href="https://github.com/mat-te123/SIMPAD_Repository" target="_blank">Github Repo SIMPAD</a></div>
+    <a href="https://github.com/mat-te123/SIMPAD_Repository" target="_blank" rel="noopener">Github Repo SIMPAD</a></div>
         </div>
       </div>
       <div class="v-div"></div>
@@ -790,6 +792,54 @@ html, body {
         <div class="learned-box">Learned to structure backend systems around relational data — connecting a project, its team, and each member's role in a way that's easy to query and display. Gained experience designing schemas that stay organized as more student projects are added.</div>
         <div class="tags">
           <span class="tag-chip">Backend</span><span class="tag-chip">REST API</span><span class="tag-chip">Database Design</span><span class="tag-chip">Dashboard</span><span class="tag-chip">Group Project</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════
+         SLIDE · UI Automation Testing – SIMPAD
+         ═══════════════════════════════════════════════ -->
+    <div class="slide s-project" id="s-simpad-test">
+      <div class="top-bar"><span>Apple Developer Academy Indonesia</span></div>
+      <div class="col-left">
+        <div class="meta-block">
+          <div class="meta-label">Year</div>
+          <div class="meta-value">2026</div>
+        </div>
+        <div class="meta-block role-block">
+          <div class="dot-acc"></div>
+          <div>
+            <div class="meta-label">Role</div>
+            <div class="meta-value">QA / Test<br>Automation Engineer</div>
+            <div class="meta-types">
+              <span class="type-badge type-group">GROUP PROJECT</span>
+              <span class="type-badge type-org">Org. Project</span>
+            </div>
+          </div>
+        </div>
+        <div class="meta-block">
+          <div class="meta-label">Link</div>
+          <div class="meta-link">
+    <a href="https://github.com/mat-te123/SIMPAD-Testing-Repository/tree/feature/all-feature" target="_blank" rel="noopener">Github Repo SIMPAD Testing</a></div>
+        </div>
+      </div>
+      <div class="v-div"></div>
+      <div class="col-right">
+        <div class="proj-label">Project Description</div>
+        <div class="proj-title">UI Automation Testing &amp; SPS Documentation · SIMPAD</div>
+        <span class="badge badge-done">● Completed</span>
+        <p class="proj-desc">Built an automated UI test suite for the SIMPAD web application using a clean Page Object Model architecture, then authored the full Spesifikasi Pengujian Sistem (SPS) document covering test scope, scenarios, and results.</p>
+        <span class="mini-label">Impact</span>
+        <ul class="bullets">
+          <li>Designed and implemented UI test automation with Selenium WebDriver and JUnit 5 in Java</li>
+          <li>Structured the test suite using a pure Page Object Model for maintainability and reusability</li>
+          <li>Wrote stable, deterministic element locators in place of brittle dynamic attributes for reliable test runs</li>
+          <li>Authored the complete SPS (Spesifikasi Pengujian Sistem) document for the system</li>
+        </ul>
+        <span class="mini-label">What I Learned</span>
+        <div class="learned-box">Learned to design test automation that stays maintainable as the UI evolves, by separating page structure from test logic through the Page Object Model. Gained experience writing resilient locators and producing formal QA documentation that bridges technical testing work with stakeholder-facing reporting.</div>
+        <div class="tags">
+          <span class="tag-chip">Selenium WebDriver</span><span class="tag-chip">JUnit 5</span><span class="tag-chip">Page Object Model</span><span class="tag-chip">Java</span><span class="tag-chip">QA Documentation</span>
         </div>
       </div>
     </div>
@@ -842,8 +892,8 @@ html, body {
 </a>
 
 <!-- Navigation -->
-<div id="zone-left"  onclick="go(-1)"></div>
-<div id="zone-right" onclick="go(+1)"></div>
+<div id="zone-left"></div>
+<div id="zone-right"></div>
 
 <button class="arrow hidden" id="arr-prev" onclick="go(-1)" aria-label="Previous">
   <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
@@ -923,13 +973,42 @@ document.addEventListener('keydown', e => {
   if (e.key === 'ArrowLeft')  { e.preventDefault(); go(-1); }
 });
 
-// Touch / swipe
+/* ── NAVIGATION VIA GLOBAL CLICK (NEW) ─────────────────
+   Clicking anywhere on the slide navigates left/right,
+   but clicks on real links, arrows, dots, or the back
+   button are excluded so they work normally. */
+let justSwiped = false;
+
+document.addEventListener('click', (e) => {
+  // Swallow the synthetic click that follows a real swipe gesture (mobile)
+  if (justSwiped) return;
+
+  // Let real links work normally
+  if (e.target.closest('a')) return;
+
+  // Ignore clicks on arrows, dots, or the back button (they have their own handlers)
+  if (e.target.closest('.arrow') || e.target.closest('.dot') || e.target.closest('#back-btn')) return;
+
+  const x = e.clientX;
+  const half = window.innerWidth / 2;
+  go(x < half ? -1 : +1);
+});
+
+/* ── TOUCH / SWIPE (UPDATED) ───────────────────────────
+   Sets justSwiped to prevent the trailing synthetic click
+   from also triggering navigation or following a link. */
 let tx0 = null;
+
 document.addEventListener('touchstart', e => { tx0 = e.touches[0].clientX; }, {passive:true});
-document.addEventListener('touchend',   e => {
+
+document.addEventListener('touchend', e => {
   if (tx0 === null) return;
   const dx = e.changedTouches[0].clientX - tx0;
-  if (Math.abs(dx) > 40) go(dx < 0 ? +1 : -1);
+  if (Math.abs(dx) > 40) {
+    justSwiped = true;
+    go(dx < 0 ? +1 : -1);
+    setTimeout(() => { justSwiped = false; }, 350);
+  }
   tx0 = null;
 }, {passive:true});
 
